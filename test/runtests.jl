@@ -11,14 +11,14 @@ using Test, ComputedGeodesicEquations
     v[1] = -1.0204101936749481
     @test all(
         BoyerLindquistCoords.geodesic_eq(u, v, M, a) .≈ (
-            0.00020820447042352235,
-            0.00010307173991982942,
-            6.6237276430728655e-25,
-            2.041442998442851e-6,
+            -0.0002083677190516319,
+            -1.014389097284123e-7,
+            5.0373193274816055e-26,
+            1.958148390240991e-6,
         ),
     )
 
-    m = BoyerLindquist(M=M, a=a)
+    m = BoyerLindquist(M = M, a = a)
     @test BoyerLindquistCoords.null_constrain(u, v, M, a) ≈ null_constrain(u, v, m)
 end
 
