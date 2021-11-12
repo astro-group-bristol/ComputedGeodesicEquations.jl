@@ -13,68 +13,277 @@ using ..ComputedGeodesicEquations
     ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(θ)
         sin_theta = sin(θ)
-        Sigma = r^2 + a^2 * cos_theta^2
-        Delta = r^2 - 2 * M * r + a^2
 
         out1 =
             2 * (
-                2 * (M * Sigma * a^3 - M * Sigma * a * r^2) * v_phi * v_r * sin_theta^2 +
-                (6 * M^2 * a^2 * r * sin_theta^2 - M * Sigma * a^2 - M * Sigma * r^2) *
-                v_r *
-                v_t -
-                8 *
+                2 *
                 (
-                    M^2 * a^3 * r^2 * v_phi * cos_theta * sin_theta^3 -
-                    2 * M^2 * a^2 * r^2 * v_t * cos_theta * sin_theta
+                    4 * M * a^3 * r^4 * cos_theta^2 + M * a^3 * r^4 + 3 * M * a * r^6 -
+                    (M * a^7 - M * a^5 * r^2) * cos_theta^4
+                ) *
+                v_phi *
+                v_r *
+                sin_theta^2 -
+                (
+                    M * a^2 * r^4 + M * r^6 - (M * a^6 + M * a^4 * r^2) * cos_theta^4 +
+                    6 * (M^2 * a^4 * r * cos_theta^2 - M^2 * a^2 * r^3) * sin_theta^2
+                ) *
+                v_r *
+                v_t +
+                2 *
+                (
+                    (
+                        (M * a^6 * r - 2 * M^2 * a^4 * r^2 + M * a^4 * r^3) * cos_theta^3 -
+                        (
+                            6 * M^2 * a^4 * r^2 - M * a^4 * r^3 + 8 * M^2 * a^2 * r^4 -
+                            M * a^2 * r^5
+                        ) * cos_theta
+                    ) *
+                    v_t *
+                    sin_theta +
+                    2 *
+                    (
+                        (M * a^7 * r - 2 * M^2 * a^5 * r^2 + M * a^5 * r^3) *
+                        cos_theta *
+                        sin_theta^5 -
+                        (
+                            M * a^7 * r - 2 * M^2 * a^5 * r^2 + 2 * M * a^5 * r^3 -
+                            2 * M^2 * a^3 * r^4 + M * a^3 * r^5
+                        ) *
+                        cos_theta *
+                        sin_theta^3
+                    ) *
+                    v_phi
                 ) *
                 v_theta
             ) / (
-                2 * M * Sigma * a^2 * r + 2 * M * Sigma * r^3 - Sigma^2 * a^2 -
-                Sigma^2 * r^2 -
-                2 * (6 * M^2 * a^2 * r^2 + M * Sigma * a^2 * r) * sin_theta^2
+                12 * M^2 * a^2 * r^4 + a^2 * r^6 - 2 * M * r^7 +
+                r^8 +
+                (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^6 -
+                3 *
+                (2 * M * a^4 * r^3 - a^4 * r^4 + (4 * M^2 * a^4 - a^6) * r^2) *
+                cos_theta^4 +
+                3 *
+                (
+                    4 * M^2 * a^4 * r^2 - 2 * M * a^2 * r^5 + a^2 * r^6 -
+                    (4 * M^2 * a^2 - a^4) * r^4
+                ) *
+                cos_theta^2
             )
-
         out2 =
-            -(
-                4 * Delta * M * a * v_phi * v_t * sin_theta^2 - Delta * M * v_t^2 -
-                (Delta * M * a^2 * sin_theta^4 + Delta * Sigma * r * sin_theta^2) * v_phi^2
-            ) / Sigma^2
-
+            (
+                4 *
+                (
+                    M * a^5 * r^2 - 4 * M^2 * a^3 * r^3 - 4 * M^2 * a * r^5 +
+                    M * a * r^6 +
+                    2 * (2 * M^3 * a + M * a^3) * r^4 -
+                    (
+                        M * a^7 - 4 * M^2 * a^5 * r - 4 * M^2 * a^3 * r^3 +
+                        M * a^3 * r^4 +
+                        2 * (2 * M^3 * a^3 + M * a^5) * r^2
+                    ) * cos_theta^2
+                ) *
+                v_phi *
+                v_t *
+                sin_theta^2 +
+                2 *
+                (
+                    (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^5 +
+                    2 * (a^6 * r^2 - 2 * M * a^4 * r^3 + a^4 * r^4) * cos_theta^3 +
+                    (a^4 * r^4 - 2 * M * a^2 * r^5 + a^2 * r^6) * cos_theta
+                ) *
+                v_r *
+                v_theta *
+                sin_theta -
+                (
+                    (
+                        M * a^6 * r^2 - 4 * M^2 * a^4 * r^3 - 4 * M^2 * a^2 * r^5 +
+                        M * a^2 * r^6 +
+                        2 * (2 * M^3 * a^2 + M * a^4) * r^4 -
+                        (
+                            M * a^8 - 4 * M^2 * a^6 * r - 4 * M^2 * a^4 * r^3 +
+                            M * a^4 * r^4 +
+                            2 * (2 * M^3 * a^4 + M * a^6) * r^2
+                        ) * cos_theta^2
+                    ) * sin_theta^4 -
+                    (
+                        a^4 * r^5 - 4 * M * a^2 * r^6 - 4 * M * r^8 +
+                        r^9 +
+                        2 * (2 * M^2 + a^2) * r^7 +
+                        (
+                            a^8 * r - 4 * M * a^6 * r^2 - 4 * M * a^4 * r^4 +
+                            a^4 * r^5 +
+                            2 * (2 * M^2 * a^4 + a^6) * r^3
+                        ) * cos_theta^4 +
+                        2 *
+                        (
+                            a^6 * r^3 - 4 * M * a^4 * r^4 - 4 * M * a^2 * r^6 +
+                            a^2 * r^7 +
+                            2 * (2 * M^2 * a^2 + a^4) * r^5
+                        ) *
+                        cos_theta^2
+                    ) * sin_theta^2
+                ) * v_phi^2 -
+                (
+                    a^2 * r^5 - M * r^6 +
+                    (M * a^6 - a^6 * r) * cos_theta^6 +
+                    (a^6 * r + M * a^4 * r^2 - 2 * a^4 * r^3) * cos_theta^4 +
+                    (2 * a^4 * r^3 - M * a^2 * r^4 - a^2 * r^5) * cos_theta^2
+                ) * v_r^2 -
+                (
+                    M * a^4 * r^2 - 4 * M^2 * a^2 * r^3 - 4 * M^2 * r^5 +
+                    M * r^6 +
+                    2 * (2 * M^3 + M * a^2) * r^4 -
+                    (
+                        M * a^6 - 4 * M^2 * a^4 * r - 4 * M^2 * a^2 * r^3 +
+                        M * a^2 * r^4 +
+                        2 * (2 * M^3 * a^2 + M * a^4) * r^2
+                    ) * cos_theta^2
+                ) * v_t^2 +
+                (
+                    a^4 * r^5 - 4 * M * a^2 * r^6 - 4 * M * r^8 +
+                    r^9 +
+                    2 * (2 * M^2 + a^2) * r^7 +
+                    (
+                        a^8 * r - 4 * M * a^6 * r^2 - 4 * M * a^4 * r^4 +
+                        a^4 * r^5 +
+                        2 * (2 * M^2 * a^4 + a^6) * r^3
+                    ) * cos_theta^4 +
+                    2 *
+                    (
+                        a^6 * r^3 - 4 * M * a^4 * r^4 - 4 * M * a^2 * r^6 +
+                        a^2 * r^7 +
+                        2 * (2 * M^2 * a^2 + a^4) * r^5
+                    ) *
+                    cos_theta^2
+                ) * v_theta^2
+            ) / (
+                a^2 * r^6 - 2 * M * r^7 +
+                r^8 +
+                (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^6 +
+                3 * (a^6 * r^2 - 2 * M * a^4 * r^3 + a^4 * r^4) * cos_theta^4 +
+                3 * (a^4 * r^4 - 2 * M * a^2 * r^5 + a^2 * r^6) * cos_theta^2
+            )
         out3 =
             -(
-                8 * M * a * r * v_phi * v_t * cos_theta * sin_theta -
+                8 *
                 (
-                    4 * M * a^2 * r * cos_theta * sin_theta^3 +
-                    (Sigma * a^2 + Sigma * r^2) * cos_theta * sin_theta
-                ) * v_phi^2
-            ) / Sigma^2
-
+                    M * a^5 * r - 2 * M^2 * a^3 * r^2 + 2 * M * a^3 * r^3 -
+                    2 * M^2 * a * r^4 + M * a * r^5
+                ) *
+                v_phi *
+                v_t *
+                cos_theta *
+                sin_theta -
+                2 *
+                (M * a^4 * r - 2 * M^2 * a^2 * r^2 + M * a^2 * r^3) *
+                v_t^2 *
+                cos_theta *
+                sin_theta -
+                (
+                    (
+                        a^8 - 4 * M * a^6 * r - 4 * M * a^4 * r^3 +
+                        a^4 * r^4 +
+                        2 * (2 * M^2 * a^4 + a^6) * r^2
+                    ) * cos_theta^5 +
+                    2 *
+                    (
+                        a^6 * r^2 - 4 * M * a^4 * r^3 - 4 * M * a^2 * r^5 +
+                        a^2 * r^6 +
+                        2 * (2 * M^2 * a^2 + a^4) * r^4
+                    ) *
+                    cos_theta^3 +
+                    (
+                        2 * M * a^6 * r - 4 * M^2 * a^4 * r^2 +
+                        6 * M * a^4 * r^3 +
+                        2 * M * a^2 * r^5 +
+                        2 * a^2 * r^6 - 2 * M * r^7 + r^8 - (8 * M^2 * a^2 - a^4) * r^4
+                    ) * cos_theta
+                ) *
+                v_phi^2 *
+                sin_theta +
+                (a^6 * cos_theta^5 + 2 * a^4 * r^2 * cos_theta^3 + a^2 * r^4 * cos_theta) *
+                v_r^2 *
+                sin_theta -
+                (
+                    (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^5 +
+                    2 * (a^6 * r^2 - 2 * M * a^4 * r^3 + a^4 * r^4) * cos_theta^3 +
+                    (a^4 * r^4 - 2 * M * a^2 * r^5 + a^2 * r^6) * cos_theta
+                ) *
+                v_theta^2 *
+                sin_theta +
+                2 *
+                (
+                    a^2 * r^5 - 2 * M * r^6 +
+                    r^7 +
+                    (a^6 * r - 2 * M * a^4 * r^2 + a^4 * r^3) * cos_theta^4 +
+                    2 * (a^4 * r^3 - 2 * M * a^2 * r^4 + a^2 * r^5) * cos_theta^2
+                ) *
+                v_r *
+                v_theta
+            ) / (
+                a^2 * r^6 - 2 * M * r^7 +
+                r^8 +
+                (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^6 +
+                3 * (a^6 * r^2 - 2 * M * a^4 * r^3 + a^4 * r^4) * cos_theta^4 +
+                3 * (a^4 * r^4 - 2 * M * a^2 * r^5 + a^2 * r^6) * cos_theta^2
+            )
         out4 =
-            -2 * (
-                2 * M * Sigma * a * v_r * v_t * sin_theta -
+            2 * (
+                2 * (M * a^5 * cos_theta^4 - M * a * r^4) * v_r * v_t * sin_theta -
                 (
-                    (6 * M^2 * a^2 * r + M * Sigma * a^2) * sin_theta^3 -
-                    (2 * M * Sigma * r^2 - Sigma^2 * r) * sin_theta
+                    (
+                        M * a^6 * cos_theta^4 + 6 * M^2 * a^4 * r * cos_theta^2 -
+                        6 * M^2 * a^2 * r^3 - M * a^2 * r^4
+                    ) * sin_theta^3 +
+                    (
+                        a^6 * r * cos_theta^6 - 2 * M * r^6 + r^7 -
+                        (2 * M * a^4 * r^2 - 3 * a^4 * r^3) * cos_theta^4 -
+                        (4 * M * a^2 * r^4 - 3 * a^2 * r^5) * cos_theta^2
+                    ) * sin_theta
                 ) *
                 v_phi *
                 v_r -
                 (
-                    4 * (2 * M^2 * a * r^2 - M * Sigma * a * r) * v_t * cos_theta +
                     (
-                        4 *
-                        (2 * M^2 * a^2 * r^2 + M * Sigma * a^2 * r) *
-                        cos_theta *
-                        sin_theta^2 -
+                        (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^7 -
                         (
-                            2 * M * Sigma * a^2 * r + 2 * M * Sigma * r^3 - Sigma^2 * a^2 -
-                            Sigma^2 * r^2
+                            2 * M * a^6 * r + 8 * M * a^4 * r^3 - 3 * a^4 * r^4 -
+                            (4 * M^2 * a^4 + 3 * a^6) * r^2
+                        ) * cos_theta^5 +
+                        (
+                            2 * M * a^6 * r - 16 * M^2 * a^4 * r^2 - 8 * M * a^2 * r^5 +
+                            3 * a^2 * r^6 - (8 * M^2 * a^2 - 3 * a^4) * r^4
+                        ) * cos_theta^3 +
+                        (
+                            12 * M^2 * a^4 * r^2 +
+                            2 * M * a^4 * r^3 +
+                            8 * M^2 * a^2 * r^4 +
+                            2 * M * a^2 * r^5 +
+                            a^2 * r^6 - 2 * M * r^7 + r^8
                         ) * cos_theta
-                    ) * v_phi
+                    ) * v_phi -
+                    4 *
+                    (
+                        (M * a^5 * r - 2 * M^2 * a^3 * r^2 + M * a^3 * r^3) * cos_theta^3 +
+                        (M * a^3 * r^3 - 2 * M^2 * a * r^4 + M * a * r^5) * cos_theta
+                    ) *
+                    v_t
                 ) * v_theta
             ) / (
                 (
-                    2 * M * Sigma * r^3 - Sigma^2 * a^2 - (12 * M^2 * a^2 + Sigma^2) * r^2 +
-                    2 * (6 * M^2 * a^2 * r^2 + M * Sigma * a^2 * r) * cos_theta^2
+                    12 * M^2 * a^2 * r^4 + a^2 * r^6 - 2 * M * r^7 +
+                    r^8 +
+                    (a^8 - 2 * M * a^6 * r + a^6 * r^2) * cos_theta^6 -
+                    3 *
+                    (2 * M * a^4 * r^3 - a^4 * r^4 + (4 * M^2 * a^4 - a^6) * r^2) *
+                    cos_theta^4 +
+                    3 *
+                    (
+                        4 * M^2 * a^4 * r^2 - 2 * M * a^2 * r^5 + a^2 * r^6 -
+                        (4 * M^2 * a^2 - a^4) * r^4
+                    ) *
+                    cos_theta^2
                 ) * sin_theta
             )
 
@@ -117,7 +326,7 @@ end # module
 end
 
 geodesic_eq(u, v, m::BoyerLindquist) = BoyerLindquistCoords.geodesic_eq(u, v, m.M, m.a)
-geodesic_eq!(duv, u, v, m::BoyerLindquist) = BoyerLindquistCoords.geodesic_eq!(duv, u, v, m.M, m.a)
-null_constrain(u, v, m::BoyerLindquist) = BoyerLindquistCoords.null_constrain(u, v, m.M, m.a)
+null_constrain(u, v, m::BoyerLindquist) =
+    BoyerLindquistCoords.null_constrain(u, v, m.M, m.a)
 
 export BoyerLindquistCoords, BoyerLindquist

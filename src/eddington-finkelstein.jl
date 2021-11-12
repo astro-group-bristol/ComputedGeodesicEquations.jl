@@ -60,8 +60,9 @@ end # module
     M = 1.0
 end
 
-geodesic_eq(u, v, m::EddingtonFinkelstein) = EddingtonFinkelsteinCoords.geodesic_eq(u, v, m.M)
-geodesic_eq!(duv, u, v, m::EddingtonFinkelstein) = EddingtonFinkelsteinCoords.geodesic_eq!(duv, u, v, m.M)
-null_constrain(u, v, m::EddingtonFinkelstein) = EddingtonFinkelsteinCoords.null_constrain(u, v, m.M)
+geodesic_eq(u, v, m::EddingtonFinkelstein) =
+    EddingtonFinkelsteinCoords.geodesic_eq(u, v, m.M)
+null_constrain(u, v, m::EddingtonFinkelstein) =
+    EddingtonFinkelsteinCoords.null_constrain(u, v, m.M)
 
 export EddingtonFinkelsteinCoords, EddingtonFinkelstein
