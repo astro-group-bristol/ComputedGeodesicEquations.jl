@@ -5,7 +5,7 @@ Automatically generated from SageMath calculations
 Fergus Baker - 9th Nov 2021
 
 """
-module BoyerLindquist
+module BoyerLindquistCoords
 
 using ..ComputedGeodesicEquations
 
@@ -82,10 +82,6 @@ using ..ComputedGeodesicEquations
     end
 end
 
-@inline function geodesic_eq!(duv, u, v, M, a)
-    duv .= geodesic_eq(u, v, M, a)
-end
-
 @inline function null_constrain(u, v, M, a)
     ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(θ)
@@ -110,8 +106,18 @@ end
     end
 end
 
-export geodesic_eq, geodesic_eq!, null_constrain
-
 end # module
 
-export BoyerLindquist
+@with_kw struct BoyerLindquist{T}
+    @deftype T
+    "Black Hole Mass."
+    M = 1.0
+    "Black Hole Spin."
+    a = 0.0
+end
+
+geodesic_eq(u, v, m::BoyerLindquist) = BoyerLindquistCoords.geodesic_eq(u, v, m.M, m.a)
+geodesic_eq!(duv, u, v, m::BoyerLindquist) = BoyerLindquistCoords.geodesic_eq!(duv, u, v, m.M, m.a)
+null_constrain(u, v, m::BoyerLindquist) = BoyerLindquistCoords.null_constrain(u, v, m.M, m.a)
+
+export BoyerLindquistCoords, BoyerLindquist
