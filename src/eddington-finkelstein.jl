@@ -5,7 +5,7 @@ Automatically generated from SageMath calculations
 Fergus Baker - 9th Nov 2021
 
 """
-module EddingtonFinkelstein
+module EddingtonFinkelsteinCoords
 
 using ..ComputedGeodesicEquations
 
@@ -54,4 +54,14 @@ end
 
 end # module
 
-export EddingtonFinkelstein
+@with_kw struct EddingtonFinkelstein{T}
+    @deftype T
+    "Black Hole Mass."
+    M = 1.0
+end
+
+geodesic_eq(u, v, m::EddingtonFinkelstein) = EddingtonFinkelsteinCoords.geodesic_eq(u, v, m.M)
+geodesic_eq!(duv, u, v, m::EddingtonFinkelstein) = EddingtonFinkelsteinCoords.geodesic_eq!(duv, u, v, m.M)
+null_constrain(u, v, m::EddingtonFinkelstein) = EddingtonFinkelsteinCoords.null_constrain(u, v, m.M)
+
+export EddingtonFinkelsteinCoords, EddingtonFinkelstein

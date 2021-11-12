@@ -4,13 +4,15 @@ Pre-computed Julia functions for components of the geodesic equation in differen
 
 These include
 
-### Kerr geometries
+## Kerr geometries
 
 - Boyer-Lindquist Coordinates
 
-### Schwarzschild geometries
+## Schwarzschild geometries
 
 - Eddington-Finkelstein Coordinates
+
+## Usage
 
 Each spacetime is an exported module, defining three functions:
 
