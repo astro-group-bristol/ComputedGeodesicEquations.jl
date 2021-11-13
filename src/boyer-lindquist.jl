@@ -299,7 +299,7 @@ end
         Delta = r^2 - 2 * M * r + a^2
 
         (
-            4 * Delta * M * a * r * v_phi * sin_theta^2 + sqrt(
+            4 * Delta * M * a * r * v_phi * sin_theta^2 - sqrt(
                 (
                     2 *
                     (6 * Delta^2 * M^2 * a^2 * r^2 + Delta^2 * M * Sigma * a^2 * r) *
