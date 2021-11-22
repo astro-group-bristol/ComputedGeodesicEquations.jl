@@ -6,15 +6,15 @@ using Test, ComputedGeodesicEquations
     u = [0.0, 100.0, π / 2.0, 0.0]
     v = [0.0, -1.0, 0.0, 1e-4]
 
-    @test BoyerLindquistCoords.null_constrain(u, v, M, a) ≈ 1.020402030409642
+    @test BoyerLindquistCoords.null_constrain(u, v, M, a) ≈ 1.020404071219846
 
-    v[1] = 1.020402030409642
+    v[1] = 1.020404071219846
     @test all(
         BoyerLindquistCoords.geodesic_eq(u, v, M, a) .≈ (
-            0.00020812117198812312,
-            - 1.9798090919204276e-8,
-            -4.9607974159635116e-26,
-            2.0414383391937405e-6,
+            0.00020818408358881096,
+            -4.0208173160182054e-8,
+            -2.4612832272924962e-26,
+            2.020616346724209e-6,
         ),
     )
 

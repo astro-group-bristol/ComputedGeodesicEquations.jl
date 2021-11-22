@@ -193,11 +193,7 @@ using ..ComputedGeodesicEquations
                 ) *
                 v_phi^2 *
                 sin_theta +
-                (
-                    a^6 * cos_theta^5 +
-                    2 * a^4 * r^2 * cos_theta^3 +
-                    a^2 * r^4 * cos_theta
-                ) *
+                (a^6 * cos_theta^5 + 2 * a^4 * r^2 * cos_theta^3 + a^2 * r^4 * cos_theta) *
                 v_r^2 *
                 sin_theta -
                 (
