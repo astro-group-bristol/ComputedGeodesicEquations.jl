@@ -15,12 +15,12 @@ using ..ComputedGeodesicEquations
         sin_theta = sin(θ)
 
         out1 = 0
-        out2 = r * v_phi^2 * sin_theta + r * v_theta^2
+        out2 = r * v_phi^2 * sin_theta^2 + r * v_theta^2
         out3 =
-            1 / 2 * ((b^2 + r^2) * v_phi^2 * cos_theta - 4 * r * v_r * v_theta) /
+            ((b^2 + r^2) * v_phi^2 * cos_theta * sin_theta - 2 * r * v_r * v_theta) /
             (b^2 + r^2)
         out4 =
-            -((b^2 + r^2) * v_phi * v_theta * cos_theta + 2 * r * v_phi * v_r * sin_theta) /
+            -2 * ((b^2 + r^2) * v_phi * v_theta * cos_theta + r * v_phi * v_r * sin_theta) /
             ((b^2 + r^2) * sin_theta)
 
         (out1, out2, out3, out4)
@@ -32,8 +32,8 @@ end
         sin_theta = sin(θ)
 
         sqrt(
-            b^2 * v_phi^2 * sin_theta +
-            r^2 * v_phi^2 * sin_theta +
+            b^2 * v_phi^2 * sin_theta^2 +
+            r^2 * v_phi^2 * sin_theta^2 +
             b^2 * v_theta^2 +
             r^2 * v_theta^2 +
             v_r^2,
@@ -45,7 +45,6 @@ end # module
 
 @with_kw struct MorrisThorne{T}
     @deftype T
-    "Throat radius."
     b = 1.0
 end
 
