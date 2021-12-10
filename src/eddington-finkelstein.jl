@@ -68,4 +68,4 @@ null_constrain(u, v, m::EddingtonFinkelstein) =
 export EddingtonFinkelsteinCoords, EddingtonFinkelstein
 
 # additional specializations
-R₀(m::EddingtonFinkelstein) = 2*m.M
+R₀(m::EddingtonFinkelstein) = 2 * m.M
