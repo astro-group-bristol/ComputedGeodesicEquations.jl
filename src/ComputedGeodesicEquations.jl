@@ -33,6 +33,7 @@ end
 
 include("boyer-lindquist.jl")
 include("eddington-finkelstein.jl")
+include("morris-thorne.jl")
 
 """
     geodesic_eq!(duv, u, v, m)
@@ -57,6 +58,14 @@ ensure the velocity vector corresponds to a null-geodesic.
 """
 null_constrain(u, v, m) = error("Not implemented for $m.")
 
-export geodesic_eq, geodesic_eq!, null_constrain
+"""
+    R₀(m)
+
+Returns the minimal chart radius, contextual to the space time. For example, for black hole metrics, returns the
+event horizon radius.
+"""
+R₀(m) = error("Not implemented for $m.")
+
+export geodesic_eq, geodesic_eq!, null_constrain, R₀
 
 end # module

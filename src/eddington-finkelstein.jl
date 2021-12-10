@@ -66,3 +66,6 @@ null_constrain(u, v, m::EddingtonFinkelstein) =
     EddingtonFinkelsteinCoords.null_constrain(u, v, m.M)
 
 export EddingtonFinkelsteinCoords, EddingtonFinkelstein
+
+# additional specializations
+R₀(m::EddingtonFinkelstein) = 2 * m.M
