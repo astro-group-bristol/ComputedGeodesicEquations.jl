@@ -33,6 +33,7 @@ end
 
 include("boyer-lindquist.jl")
 include("eddington-finkelstein.jl")
+include("morris-thorne.jl")
 
 """
     geodesic_eq!(duv, u, v, m)
