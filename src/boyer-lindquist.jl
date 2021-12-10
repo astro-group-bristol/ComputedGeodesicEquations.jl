@@ -362,3 +362,6 @@ null_constrain(u, v, m::BoyerLindquist) =
     BoyerLindquistCoords.null_constrain(u, v, m.M, m.a)
 
 export BoyerLindquistCoords, BoyerLindquist
+
+# additional specializations
+R₀(m::BoyerLindquist) = m.M + √(m.M^2 - m.a^2)
