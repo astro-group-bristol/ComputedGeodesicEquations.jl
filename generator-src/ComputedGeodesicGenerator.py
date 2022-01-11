@@ -5,14 +5,13 @@ def indexprod(n):
     return itertools.product(*[range(4) for _ in range(n)])
 
 def __generate_geodesic_equations(g, vel):
-    ginv = g.inverse()
-
+    mu = var("mu")
     constrain_eq = 0
 
     for (i, j) in indexprod(2):
         constrain_eq += g[i,j] * vel[i] * vel[j]
 
-    sols = (constrain_eq.expr()==0).solve(vel[0])
+    sols = (constrain_eq.expr()==mu^2).solve(vel[0])
 
     cs = g.christoffel_symbols()
 
@@ -75,10 +74,11 @@ def make_constraint_julia_function(constraint_eq, *args):
     expr = str(constraint_eq).split('==')[1]
     
     cached_funcs, cached_output = cache_functions(expr)
+    cached_output = cached_output.replace("mu", "μ")
     
-    arguments = ", ".join((str(i) for i in ['u', 'v', *args]))
+    arguments = ", ".join((str(i) for i in ['μ', 'u', 'v', *args]))
     
-    func = f"""@inline function null_constrain({arguments})
+    func = f"""@inline function constrain({arguments})
     ComputedGeodesicEquations.@let_unpack u v begin
         {cached_funcs}
         {cached_output}
@@ -115,13 +115,13 @@ using ..ComputedGeodesicEquations
 {constraint_function}
 end # module
 
-@with_kw struct {name}{{T}}
+@with_kw struct {name}{{T}} <: AbstractMetricParams{{T}}
     @deftype T
     {struct_fields}
 end
 
-geodesic_eq(u, v, m::{name}) = {name}Coords.geodesic_eq(u, v, {struct_arguments})
-null_constrain(u, v, m::{name}) = {name}Coords.null_constrain(u, v, {struct_arguments})
+geodesic_eq(m::{name}, u, v) = {name}Coords.geodesic_eq(u, v, {struct_arguments})
+constrain(m::{name}{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
 
 export {name}Coords, {name}
     """
