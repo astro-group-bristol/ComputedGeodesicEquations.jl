@@ -1,6 +1,6 @@
-""" 
+"""
 
-Automatically generated from SageMath calculations 
+Automatically generated from SageMath calculations
 
 Fergus Baker - 9th Nov 2021
 
@@ -259,16 +259,22 @@ using ..ComputedGeodesicEquations
     end
 end
 
-@inline function null_constrain(u, v, M, a)
+@inline function constrain(μ, u, v, M, a)
     ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(θ)
         sin_theta = sin(θ)
-        Sigma = r^2 + a^2 * cos_theta^2
-        Delta = r^2 - 2 * M * r + a^2
 
         (
             2 * (M * a^3 * r - 2 * M^2 * a * r^2 + M * a * r^3) * v_phi * sin_theta^2 -
             sqrt(
+                2 * M * a^4 * μ^2 * r^3 + 6 * M * μ^2 * r^7 - μ^2 * r^8 -
+                2 * (6 * M^2 + a^2) * μ^2 * r^6 + 8 * (M^3 + M * a^2) * μ^2 * r^5 -
+                (8 * M^2 * a^2 + a^4) * μ^2 * r^4 -
+                (
+                    a^8 * μ^2 - 4 * M * a^6 * μ^2 * r - 4 * M * a^4 * μ^2 * r^3 +
+                    a^4 * μ^2 * r^4 +
+                    2 * (2 * M^2 * a^4 + a^6) * μ^2 * r^2
+                ) * cos_theta^4 +
                 (
                     2 *
                     (
@@ -338,7 +344,15 @@ end
                         4 * (4 * M^3 * a^2 + 5 * M * a^4) * r^5 -
                         (16 * M^2 * a^4 + 3 * a^6) * r^4
                     ) * cos_theta^2
-                ) * v_theta^2,
+                ) * v_theta^2 +
+                2 *
+                (
+                    M * a^6 * μ^2 * r + 5 * M * a^2 * μ^2 * r^5 - a^2 * μ^2 * r^6 -
+                    2 * (4 * M^2 * a^2 + a^4) * μ^2 * r^4 +
+                    2 * (2 * M^3 * a^2 + 3 * M * a^4) * μ^2 * r^3 -
+                    (4 * M^2 * a^4 + a^6) * μ^2 * r^2
+                ) *
+                cos_theta^2,
             )
         ) / (
             2 * M * a^2 * r + 4 * M * r^3 - r^4 - (4 * M^2 + a^2) * r^2 -
@@ -349,19 +363,17 @@ end
 
 end # module
 
-@with_kw struct BoyerLindquist{T}
+@with_kw struct BoyerLindquist{T} <: AbstractMetricParams{T}
     @deftype T
-    "Black Hole Mass."
     M = 1.0
-    "Black Hole Spin."
     a = 0.0
 end
 
-geodesic_eq(u, v, m::BoyerLindquist) = BoyerLindquistCoords.geodesic_eq(u, v, m.M, m.a)
-null_constrain(u, v, m::BoyerLindquist) =
-    BoyerLindquistCoords.null_constrain(u, v, m.M, m.a)
+geodesic_eq(m::BoyerLindquist, u, v) = BoyerLindquistCoords.geodesic_eq(u, v, m.M, m.a)
+constrain(m::BoyerLindquist{T}, u, v; μ::T = 0.0) where {T} =
+    BoyerLindquistCoords.constrain(μ, u, v, m.M, m.a)
 
 export BoyerLindquistCoords, BoyerLindquist
 
 # additional specializations
-R₀(m::BoyerLindquist) = m.M + √(m.M^2 - m.a^2)
+inner_radius(m::BoyerLindquist{T}) where {T} = m.M + √(m.M^2 - m.a^2)

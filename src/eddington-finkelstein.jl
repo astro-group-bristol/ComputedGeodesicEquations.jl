@@ -1,6 +1,6 @@
-""" 
+"""
 
-Automatically generated from SageMath calculations 
+Automatically generated from SageMath calculations
 
 Fergus Baker - 9th Nov 2021
 
@@ -11,8 +11,8 @@ using ..ComputedGeodesicEquations
 
 @inline function geodesic_eq(u, v, M)
     ComputedGeodesicEquations.@let_unpack u v begin
-        sin_theta = sin(θ)
         cos_theta = cos(θ)
+        sin_theta = sin(θ)
 
         out1 =
             2 * (
@@ -34,38 +34,33 @@ using ..ComputedGeodesicEquations
     end
 end
 
-@inline function geodesic_eq!(duv, u, v, M)
-    duv .= geodesic_eq(u, v, M)
-end
-
-@inline function null_constrain(u, v, M)
+@inline function constrain(μ, u, v, M)
     ComputedGeodesicEquations.@let_unpack u v begin
+        cos_theta = cos(θ)
         sin_theta = sin(θ)
 
         -(
-            2 * M * v_r -
-            sqrt(
-                -(2 * M * r - r^2) * v_phi^2 * sin_theta^2 - (2 * M * r - r^2) * v_theta^2 +
-                v_r^2,
-            ) * r
+            2 * M * v_r - sqrt(
+                -(2 * M * r^3 - r^4) * v_phi^2 * sin_theta^2 + 2 * M * μ^2 * r - μ^2 * r^2 +
+                r^2 * v_r^2 - (2 * M * r^3 - r^4) * v_theta^2,
+            )
         ) / (2 * M - r)
     end
 end
 
 end # module
 
-@with_kw struct EddingtonFinkelstein{T}
+@with_kw struct EddingtonFinkelstein{T} <: AbstractMetricParams{T}
     @deftype T
-    "Black Hole Mass."
     M = 1.0
 end
 
-geodesic_eq(u, v, m::EddingtonFinkelstein) =
+geodesic_eq(m::EddingtonFinkelstein, u, v) =
     EddingtonFinkelsteinCoords.geodesic_eq(u, v, m.M)
-null_constrain(u, v, m::EddingtonFinkelstein) =
-    EddingtonFinkelsteinCoords.null_constrain(u, v, m.M)
+constrain(m::EddingtonFinkelstein{T}, u, v; μ::T = 0.0) where {T} =
+    EddingtonFinkelsteinCoords.constrain(μ, u, v, m.M)
 
 export EddingtonFinkelsteinCoords, EddingtonFinkelstein
 
 # additional specializations
-R₀(m::EddingtonFinkelstein) = 2 * m.M
+inner_radius(m::EddingtonFinkelstein{T}) where {T} = 2 * m.M
