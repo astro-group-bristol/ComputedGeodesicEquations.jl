@@ -2,7 +2,7 @@ module ComputedGeodesicEquations
 
 using Parameters
 import GeodesicBase:
-    AbstractMetricParams, geodesic_eq, geodesic_eq!, constrain, on_chart, inner_radius
+    AbstractMetricParams, geodesic_eq, constrain, on_chart, inner_radius
 
 """
     let_unpack(u, v, expr)
@@ -37,6 +37,6 @@ include("boyer-lindquist.jl")
 include("eddington-finkelstein.jl")
 include("morris-thorne.jl")
 
-export geodesic_eq, geodesic_eq!, constrain, on_chart, inner_radius 
+export geodesic_eq, constrain, on_chart, inner_radius 
 
 end # module
