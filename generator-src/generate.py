@@ -19,11 +19,6 @@ def generate_morris_thorne():
     g[3, 3] = (b**2 + r**2) * sin(theta)
 
     module = make_julia_module_from_metric_spherical(name, g, b=1.0)
-
-    module += f"""
-# additional specializations
-R₀(m::{name}) = 0.0
-    """
     
     save_module(module, "morris-thorne")
 
@@ -49,7 +44,7 @@ def generate_eddington_finkelstein():
 
     module += f"""
 # additional specializations
-R₀(m::{name}) = 2*m.M
+inner_radius(m::{name}{{T}}) where {{T}} = 2 * m.M
     """
     
     save_module(module, "eddington-finkelstein")
@@ -82,7 +77,7 @@ def generate_boyer_lindquist():
 
     module += f"""
 # additional specializations
-R₀(m::{name}) = m.M + √(m.M^2 - m.a^2)
+inner_radius(m::{name}{{T}}) where {{T}} = m.M + √(m.M^2 - m.a^2)
     """
     
     save_module(module, "boyer-lindquist")
