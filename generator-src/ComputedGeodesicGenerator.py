@@ -120,7 +120,7 @@ end # module
     {struct_fields}
 end
 
-geodesic_eq(m::{name}, u, v) = {name}Coords.geodesic_eq(u, v, {struct_arguments})
+geodesic_eq(m::{name}{{T}}, u, v) where {{T}} = {name}Coords.geodesic_eq(u, v, {struct_arguments})
 constrain(m::{name}{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
 
 export {name}Coords, {name}
