@@ -1,9 +1,10 @@
 name = "ComputedGeodesicEquations"
 uuid = "42910a5e-bdf1-4870-a538-dfa35571a56d"
 authors = ["fjebaker <fergusbkr@gmail.com>"]
-version = "0.3.0"
+version = "0.3.1"
 
 [deps]
+GeodesicBase = "1f539516-e6d2-4f24-ab09-50f3ac3c4a5a"
 JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
 
