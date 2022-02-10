@@ -79,7 +79,7 @@ def make_geodesic_julia_function(geodesic_eqs, *args):
     arguments = ", ".join((str(i) for i in ['u', 'v', *args]))
     
     func = f"""@inline function geodesic_eq({arguments})
-    ComputedGeodesicEquations.@let_unpack u v begin
+    @fastmath ComputedGeodesicEquations.@let_unpack u v begin
         {cached_funcs}
         {cached_outputs}
         (out1, out2, out3, out4)
@@ -98,7 +98,7 @@ def make_constraint_julia_function(constraint_eq, *args):
     arguments = ", ".join((str(i) for i in ['μ', 'u', 'v', *args]))
     
     func = f"""@inline function constrain({arguments})
-    ComputedGeodesicEquations.@let_unpack u v begin
+    @fastmath ComputedGeodesicEquations.@let_unpack u v begin
         {cached_funcs}
         {cached_output}
     end
@@ -125,7 +125,7 @@ def make_metric_julia_function(g, name, *args):
     arguments = ", ".join((str(i) for i in ['u', *args]))
 
     func = f"""@inline function {name}({arguments})
-    let t = u[1], r = u[2], theta = u[3], phi = u[4] 
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4] 
         {cached_funcs}
         ComputedGeodesicEquations.@SMatrix {cached_output}
     end
@@ -150,7 +150,7 @@ def make_jacobian_julia_function(jac, *args):
     cached_funcs, cached_output = cache_functions(components)
 
     func = f"""@inline function jacobian({arguments})
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         {cached_funcs}
         {cached_output}
         (comp1, comp2, comp3, comp4)
@@ -209,6 +209,7 @@ geodesic_eq(m::{name}{{T}}, u, v) where {{T}} = {name}Coords.geodesic_eq(u, v, {
 geodesic_eq(m::{name}Jac{{T}}, u, v) where {{T}} = jac_geodesic_eq(m, u, v)
 
 constrain(m::{name}{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
+constrain(m::{name}Jac{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
 
 # specialisations
 metric(m::{name}{{T}}, u) where {{T}} = {name}Coords.metric(u, {struct_arguments})
