@@ -201,7 +201,7 @@ end
 end
 
 geodesic_eq(m::{name}{{T}}, u, v) where {{T}} = {name}Coords.geodesic_eq(u, v, {struct_arguments})
-geodesic_eq(m::{name}Jac{{T}}, u, v) where {{T}} = {name}Coords.jac_geodesic_eq(u, v, m)
+geodesic_eq(m::{name}Jac{{T}}, u, v) where {{T}} = jac_geodesic_eq(u, v, m)
 
 constrain(m::{name}{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
 
