@@ -5,8 +5,9 @@ version = "0.3.1"
 
 [deps]
 GeodesicBase = "1f539516-e6d2-4f24-ab09-50f3ac3c4a5a"
-JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
 Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+Tullio = "bc48ee85-29a4-5162-ae0b-a64e1601d4bc"
 
 [compat]
 julia = "1.0"
