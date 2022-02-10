@@ -111,6 +111,8 @@ geodesic_eq(m::MorrisThorneJac{T}, u, v) where {T} = jac_geodesic_eq(m, u, v)
 
 constrain(m::MorrisThorne{T}, u, v; μ::T = 0.0) where {T} =
     MorrisThorneCoords.constrain(μ, u, v, m.b)
+constrain(m::MorrisThorneJac{T}, u, v; μ::T = 0.0) where {T} =
+    MorrisThorneCoords.constrain(μ, u, v, m.b)
 
 # specialisations
 metric(m::MorrisThorne{T}, u) where {T} = MorrisThorneCoords.metric(u, m.b)

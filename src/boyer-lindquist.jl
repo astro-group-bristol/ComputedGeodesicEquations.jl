@@ -434,6 +434,8 @@ geodesic_eq(m::BoyerLindquistJac{T}, u, v) where {T} = jac_geodesic_eq(m, u, v)
 
 constrain(m::BoyerLindquist{T}, u, v; μ::T = 0.0) where {T} =
     BoyerLindquistCoords.constrain(μ, u, v, m.M, m.a)
+constrain(m::BoyerLindquistJac{T}, u, v; μ::T = 0.0) where {T} =
+    BoyerLindquistCoords.constrain(μ, u, v, m.M, m.a)
 
 # specialisations
 metric(m::BoyerLindquist{T}, u) where {T} = BoyerLindquistCoords.metric(u, m.M, m.a)

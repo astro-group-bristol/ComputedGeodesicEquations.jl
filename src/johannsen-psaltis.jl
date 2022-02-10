@@ -3205,6 +3205,8 @@ geodesic_eq(m::JohannsenPsaltisJac{T}, u, v) where {T} = jac_geodesic_eq(m, u, v
 
 constrain(m::JohannsenPsaltis{T}, u, v; μ::T = 0.0) where {T} =
     JohannsenPsaltisCoords.constrain(μ, u, v, m.M, m.a, m.epsilon)
+constrain(m::JohannsenPsaltisJac{T}, u, v; μ::T = 0.0) where {T} =
+    JohannsenPsaltisCoords.constrain(μ, u, v, m.M, m.a, m.epsilon)
 
 # specialisations
 metric(m::JohannsenPsaltis{T}, u) where {T} =

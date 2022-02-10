@@ -209,6 +209,7 @@ geodesic_eq(m::{name}{{T}}, u, v) where {{T}} = {name}Coords.geodesic_eq(u, v, {
 geodesic_eq(m::{name}Jac{{T}}, u, v) where {{T}} = jac_geodesic_eq(m, u, v)
 
 constrain(m::{name}{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
+constrain(m::{name}Jac{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
 
 # specialisations
 metric(m::{name}{{T}}, u) where {{T}} = {name}Coords.metric(u, {struct_arguments})

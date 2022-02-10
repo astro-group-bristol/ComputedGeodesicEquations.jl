@@ -119,6 +119,8 @@ geodesic_eq(m::EddingtonFinkelsteinJac{T}, u, v) where {T} = jac_geodesic_eq(m, 
 
 constrain(m::EddingtonFinkelstein{T}, u, v; μ::T = 0.0) where {T} =
     EddingtonFinkelsteinCoords.constrain(μ, u, v, m.M)
+constrain(m::EddingtonFinkelsteinJac{T}, u, v; μ::T = 0.0) where {T} =
+    EddingtonFinkelsteinCoords.constrain(μ, u, v, m.M)
 
 # specialisations
 metric(m::EddingtonFinkelstein{T}, u) where {T} = EddingtonFinkelsteinCoords.metric(u, m.M)
