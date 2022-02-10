@@ -12,7 +12,7 @@ module JohannsenPsaltisCoords
 using ..ComputedGeodesicEquations
 
 @inline function geodesic_eq(u, v, M, a, epsilon)
-    ComputedGeodesicEquations.@let_unpack u v begin
+    @fastmath ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -2129,7 +2129,7 @@ using ..ComputedGeodesicEquations
 end
 
 @inline function constrain(μ, u, v, M, a, epsilon)
-    ComputedGeodesicEquations.@let_unpack u v begin
+    @fastmath ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -3132,7 +3132,7 @@ end
 end
 
 @inline function jacobian(u, M, a, epsilon)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -3155,7 +3155,7 @@ end
 end
 
 @inline function metric(u, M, a, epsilon)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -3169,7 +3169,7 @@ end
 end
 
 @inline function inverse_metric(u, M, a, epsilon)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 

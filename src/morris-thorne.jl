@@ -11,7 +11,7 @@ module MorrisThorneCoords
 using ..ComputedGeodesicEquations
 
 @inline function geodesic_eq(u, v, b)
-    ComputedGeodesicEquations.@let_unpack u v begin
+    @fastmath ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -29,7 +29,7 @@ using ..ComputedGeodesicEquations
 end
 
 @inline function constrain(μ, u, v, b)
-    ComputedGeodesicEquations.@let_unpack u v begin
+    @fastmath ComputedGeodesicEquations.@let_unpack u v begin
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -43,7 +43,7 @@ end
 end
 
 @inline function jacobian(u, b)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -66,7 +66,7 @@ end
 end
 
 @inline function metric(u, b)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
@@ -80,7 +80,7 @@ end
 end
 
 @inline function inverse_metric(u, b)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
