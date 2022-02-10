@@ -47,25 +47,25 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = @SMatrix [
+        comp1 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
             0 0 0 0
         ]
-        comp2 = @SMatrix [
+        comp2 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 2*r 0
             0 0 0 2*r*sin_theta
         ]
-        comp3 = @SMatrix [
+        comp3 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
             0 0 0 (b^2+r^2)*cos_theta
         ]
-        comp4 = @SMatrix [
+        comp4 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
@@ -80,7 +80,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        @SMatrix [
+        ComputedGeodesicEquations.@SMatrix [
             -1 0 0 0
             0 1 0 0
             0 0 b^2+r^2 0
@@ -94,7 +94,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        @SMatrix [
+        ComputedGeodesicEquations.@SMatrix [
             -1 0 0 0
             0 1 0 0
             0 0 1/(b^2+r^2) 0

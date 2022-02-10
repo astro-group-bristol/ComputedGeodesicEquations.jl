@@ -3136,25 +3136,25 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = @SMatrix [
+        comp1 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
             0 0 0 0
         ]
-        comp2 = @SMatrix [
+        comp2 = ComputedGeodesicEquations.@SMatrix [
             (2*M*a^6*cos_theta^6-8*M^3*epsilon*r^3+3*M^2*epsilon*r^4-2*M*r^6-(M^2*a^4*epsilon-2*M*a^4*r^2)*cos_theta^4+2*(2*M^3*a^2*epsilon*r+M^2*a^2*epsilon*r^2-M*a^2*r^4)*cos_theta^2)/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8) 0 0 -2*(M*a^7*cos_theta^6+M*a^5*r^2*cos_theta^4-4*M^3*a*epsilon*r^3-M*a*r^6+(2*M^3*a^3*epsilon*r-M*a^3*r^4)*cos_theta^2)*sin_theta^2/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8)
             0 (2*M^4*a^2*epsilon^2*r^3+4*M^2*a^2*epsilon*r^6+4*M^3*epsilon*r^7-3*M^2*epsilon*r^8+2*a^2*r^9-2*M*r^10+2*(M*a^10-a^10*r)*cos_theta^10+(M^2*a^8*epsilon+2*a^10*r+6*M*a^8*r^2-8*a^8*r^3)*cos_theta^8-4*(M^2*a^6*epsilon*r^2-2*a^8*r^3-M*a^6*r^4+3*a^6*r^5)*cos_theta^6+2*(2*M^2*a^6*epsilon*r^2+2*M^3*a^4*epsilon*r^3-7*M^2*a^4*epsilon*r^4+6*a^6*r^5-2*M*a^4*r^6-4*a^4*r^7)*cos_theta^4-2*(M^4*a^2*epsilon^2*r^3-4*M^2*a^4*epsilon*r^4-4*M^3*a^2*epsilon*r^5+6*M^2*a^2*epsilon*r^6-4*a^4*r^7+3*M*a^2*r^8+a^2*r^9)*cos_theta^2)/(M^4*a^4*epsilon^2*r^2*sin_theta^4+a^4*r^8-4*M*a^2*r^9-4*M*r^11+r^12+2*(2*M^2+a^2)*r^10+(a^12-4*M*a^10*r-4*M*a^8*r^3+a^8*r^4+2*(2*M^2*a^8+a^10)*r^2)*cos_theta^8+4*(a^10*r^2-4*M*a^8*r^3-4*M*a^6*r^5+a^6*r^6+2*(2*M^2*a^6+a^8)*r^4)*cos_theta^6+6*(a^8*r^4-4*M*a^6*r^5-4*M*a^4*r^7+a^4*r^8+2*(2*M^2*a^4+a^6)*r^6)*cos_theta^4+4*(a^6*r^6-4*M*a^4*r^7-4*M*a^2*r^9+a^2*r^10+2*(2*M^2*a^2+a^4)*r^8)*cos_theta^2+2*(M^2*a^4*epsilon*r^5-2*M^3*a^2*epsilon*r^6+M^2*a^2*epsilon*r^7+(M^2*a^8*epsilon*r-2*M^3*a^6*epsilon*r^2+M^2*a^6*epsilon*r^3)*cos_theta^4+2*(M^2*a^6*epsilon*r^3-2*M^3*a^4*epsilon*r^4+M^2*a^4*epsilon*r^5)*cos_theta^2)*sin_theta^2) 0 0
             0 0 2*r 0
             -2*(M*a^7*cos_theta^6+M*a^5*r^2*cos_theta^4-4*M^3*a*epsilon*r^3-M*a*r^6+(2*M^3*a^3*epsilon*r-M*a^3*r^4)*cos_theta^2)*sin_theta^2/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8) 0 0 ((2*M*a^8*cos_theta^6-8*M^3*a^2*epsilon*r^3-3*M^2*a^2*epsilon*r^4-2*M*a^2*r^6+(M^2*a^6*epsilon+2*M*a^6*r^2)*cos_theta^4+2*(2*M^3*a^4*epsilon*r-M^2*a^4*epsilon*r^2-M*a^4*r^4)*cos_theta^2)*sin_theta^4+2*(a^8*r*cos_theta^8+4*a^6*r^3*cos_theta^6+6*a^4*r^5*cos_theta^4+4*a^2*r^7*cos_theta^2+r^9)*sin_theta^2)/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8)
         ]
-        comp3 = @SMatrix [
+        comp3 = ComputedGeodesicEquations.@SMatrix [
             4*(M*a^6*r*cos_theta^5-(M^2*a^4*epsilon*r-2*M*a^4*r^3)*cos_theta^3+(3*M^3*a^2*epsilon*r^2-M^2*a^2*epsilon*r^3+M*a^2*r^5)*cos_theta)*sin_theta/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8) 0 0 -4*((M*a^7*r+M*a^5*r^3)*cos_theta^5-2*(M^3*a^3*epsilon*r^2-M*a^5*r^3-M*a^3*r^5)*cos_theta^3+(3*M^3*a^3*epsilon*r^2+M^3*a*epsilon*r^4+M*a^3*r^5+M*a*r^7)*cos_theta)*sin_theta/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8)
             0 -2*((a^12-2*M*a^10*r+a^10*r^2)*cos_theta^9-2*(M^2*a^8*epsilon*r-2*a^10*r^2+4*M*a^8*r^3-2*a^8*r^4)*cos_theta^7+2*(M^2*a^8*epsilon*r+M^3*a^6*epsilon*r^2-2*M^2*a^6*epsilon*r^3+3*a^8*r^4-6*M*a^6*r^5+3*a^6*r^6)*cos_theta^5+2*(2*M^2*a^6*epsilon*r^3+2*M^3*a^4*epsilon*r^4-M^2*a^4*epsilon*r^5+2*a^6*r^6-4*M*a^4*r^7+2*a^4*r^8)*cos_theta^3+(M^4*a^4*epsilon^2*r^2+M^4*a^2*epsilon^2*r^4+2*M^2*a^4*epsilon*r^5+2*M^3*a^2*epsilon*r^6+a^4*r^8-2*M*a^2*r^9+a^2*r^10)*cos_theta)*sin_theta/(M^4*a^4*epsilon^2*r^2*sin_theta^4+a^4*r^8-4*M*a^2*r^9-4*M*r^11+r^12+2*(2*M^2+a^2)*r^10+(a^12-4*M*a^10*r-4*M*a^8*r^3+a^8*r^4+2*(2*M^2*a^8+a^10)*r^2)*cos_theta^8+4*(a^10*r^2-4*M*a^8*r^3-4*M*a^6*r^5+a^6*r^6+2*(2*M^2*a^6+a^8)*r^4)*cos_theta^6+6*(a^8*r^4-4*M*a^6*r^5-4*M*a^4*r^7+a^4*r^8+2*(2*M^2*a^4+a^6)*r^6)*cos_theta^4+4*(a^6*r^6-4*M*a^4*r^7-4*M*a^2*r^9+a^2*r^10+2*(2*M^2*a^2+a^4)*r^8)*cos_theta^2+2*(M^2*a^4*epsilon*r^5-2*M^3*a^2*epsilon*r^6+M^2*a^2*epsilon*r^7+(M^2*a^8*epsilon*r-2*M^3*a^6*epsilon*r^2+M^2*a^6*epsilon*r^3)*cos_theta^4+2*(M^2*a^6*epsilon*r^3-2*M^3*a^4*epsilon*r^4+M^2*a^4*epsilon*r^5)*cos_theta^2)*sin_theta^2) 0 0
             0 0 -2*a^2*cos_theta*sin_theta 0
             -4*((M*a^7*r+M*a^5*r^3)*cos_theta^5-2*(M^3*a^3*epsilon*r^2-M*a^5*r^3-M*a^3*r^5)*cos_theta^3+(3*M^3*a^3*epsilon*r^2+M^3*a*epsilon*r^4+M*a^3*r^5+M*a*r^7)*cos_theta)*sin_theta/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8) 0 0 2*(2*(M*a^8*r*cos_theta^5+(M^2*a^6*epsilon*r+2*M*a^6*r^3)*cos_theta^3+(3*M^3*a^4*epsilon*r^2+M^2*a^4*epsilon*r^3+M*a^4*r^5)*cos_theta)*sin_theta^5+2*(2*M*a^8*r*cos_theta^7+(M^2*a^6*epsilon*r+6*M*a^6*r^3)*cos_theta^5+2*(M^3*a^4*epsilon*r^2+M^2*a^4*epsilon*r^3+3*M*a^4*r^5)*cos_theta^3+(2*M^3*a^2*epsilon*r^4+M^2*a^2*epsilon*r^5+2*M*a^2*r^7)*cos_theta)*sin_theta^3+((a^10+a^8*r^2)*cos_theta^9+4*(a^8*r^2+a^6*r^4)*cos_theta^7+6*(a^6*r^4+a^4*r^6)*cos_theta^5+4*(a^4*r^6+a^2*r^8)*cos_theta^3+(a^2*r^8+r^10)*cos_theta)*sin_theta)/(a^8*cos_theta^8+4*a^6*r^2*cos_theta^6+6*a^4*r^4*cos_theta^4+4*a^2*r^6*cos_theta^2+r^8)
         ]
-        comp4 = @SMatrix [
+        comp4 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
@@ -3169,7 +3169,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        @SMatrix [
+        ComputedGeodesicEquations.@SMatrix [
             (M^2*epsilon*r/(a^2*cos_theta^2+r^2)^2+1)*(2*M*r/(a^2*cos_theta^2+r^2)-1) 0 0 -2*(M^2*epsilon*r/(a^2*cos_theta^2+r^2)^2+1)*M*a*r*sin_theta^2/(a^2*cos_theta^2+r^2)
             0 (a^2*cos_theta^2+r^2)*(M^2*epsilon*r/(a^2*cos_theta^2+r^2)^2+1)/(M^2*a^2*epsilon*r*sin_theta^2/(a^2*cos_theta^2+r^2)^2+a^2-2*M*r+r^2) 0 0
             0 0 a^2*cos_theta^2+r^2 0
@@ -3183,7 +3183,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        @SMatrix [
+        ComputedGeodesicEquations.@SMatrix [
             -(a^2 * r^8 + r^10 + (a^10 + a^8 * r^2) * cos_theta^8 + 4 * (a^8 * r^2 + a^6 * r^4) * cos_theta^6 + 6 * (a^6 * r^4 + a^4 * r^6) * cos_theta^4 + 4 * (a^4 * r^6 + a^2 * r^8) * cos_theta^2 + (2 * M * a^8 * r * cos_theta^6 + 2 * M^3 * a^2 * epsilon * r^4 + M^2 * a^2 * epsilon * r^5 + 2 * M * a^2 * r^7 + (M^2 * a^6 * epsilon * r + 6 * M * a^6 * r^3) * cos_theta^4 + 2 * (M^3 * a^4 * epsilon * r^2 + M^2 * a^4 * epsilon * r^3 + 3 * M * a^4 * r^5) * cos_theta^2) * sin_theta^2)/(M^4*a^2*epsilon^2*r^2+2*M^2*a^2*epsilon*r^5-2*M^3*epsilon*r^6+M^2*epsilon*r^7+a^2*r^8-2*M*r^9+r^10+(a^10-2*M*a^8*r+a^8*r^2)*cos_theta^8-(M^2*a^6*epsilon*r-4*a^8*r^2+8*M*a^6*r^3-4*a^6*r^4)*cos_theta^6+(2*M^2*a^6*epsilon*r-2*M^3*a^4*epsilon*r^2-M^2*a^4*epsilon*r^3+6*a^6*r^4-12*M*a^4*r^5+6*a^4*r^6)*cos_theta^4-(M^4*a^2*epsilon^2*r^2-4*M^2*a^4*epsilon*r^3+4*M^3*a^2*epsilon*r^4-M^2*a^2*epsilon*r^5-4*a^4*r^6+8*M*a^2*r^7-4*a^2*r^8)*cos_theta^2) 0 0 -2*(M*a^3*r*cos_theta^2+M*a*r^3)/(M^2*a^2*epsilon*r+a^2*r^4-2*M*r^5+r^6+(a^6-2*M*a^4*r+a^4*r^2)*cos_theta^4-(M^2*a^2*epsilon*r-2*a^4*r^2+4*M*a^2*r^3-2*a^2*r^4)*cos_theta^2)
             0 (M^2*a^2*epsilon*r*sin_theta^2+a^2*r^4-2*M*r^5+r^6+(a^6-2*M*a^4*r+a^4*r^2)*cos_theta^4+2*(a^4*r^2-2*M*a^2*r^3+a^2*r^4)*cos_theta^2)/(a^6*cos_theta^6+3*a^4*r^2*cos_theta^4+M^2*epsilon*r^3+r^6+(M^2*a^2*epsilon*r+3*a^2*r^4)*cos_theta^2) 0 0
             0 0 1/(a^2*cos_theta^2+r^2) 0

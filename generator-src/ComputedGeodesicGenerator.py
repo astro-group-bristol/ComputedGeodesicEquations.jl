@@ -127,7 +127,7 @@ def make_metric_julia_function(g, name, *args):
     func = f"""@inline function {name}({arguments})
     let t = u[1], r = u[2], theta = u[3], phi = u[4] 
         {cached_funcs}
-        @SMatrix {cached_output}
+        ComputedGeodesicEquations.@SMatrix {cached_output}
     end
 end 
     """
@@ -137,7 +137,7 @@ def make_jacobian_julia_function(jac, *args):
     matrix_strings = [to_julia_matrix(str(v)) for (_, v) in jac.items()]
 
     components = "\n".join(
-        [f"comp{i+1} = @SMatrix {matrix_strings[i]}" for i in range(4)]
+        [f"comp{i+1} = ComputedGeodesicEquations.@SMatrix {matrix_strings[i]}" for i in range(4)]
     )
 
     arguments = ", ".join((str(i) for i in ['u', *args]))

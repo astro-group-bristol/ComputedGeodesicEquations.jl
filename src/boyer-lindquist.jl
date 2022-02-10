@@ -367,25 +367,25 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = @SMatrix [
+        comp1 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
             0 0 0 0
         ]
-        comp2 = @SMatrix [
+        comp2 = ComputedGeodesicEquations.@SMatrix [
             2*(M*a^2*cos_theta^2-M*r^2)/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 -2*(M*a^3*cos_theta^2-M*a*r^2)*sin_theta^2/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
             0 2*(a^2*r-M*r^2+(M*a^2-a^2*r)*cos_theta^2)/(a^4-4*M*a^2*r-4*M*r^3+r^4+2*(2*M^2+a^2)*r^2) 0 0
             0 0 2*r 0
             -2*(M*a^3*cos_theta^2-M*a*r^2)*sin_theta^2/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 2*((M*a^4*cos_theta^2-M*a^2*r^2)*sin_theta^4+(a^4*r*cos_theta^4+2*a^2*r^3*cos_theta^2+r^5)*sin_theta^2)/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
         ]
-        comp3 = @SMatrix [
+        comp3 = ComputedGeodesicEquations.@SMatrix [
             4*M*a^2*r*cos_theta*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 -4*(M*a^3*r+M*a*r^3)*cos_theta*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
             0 -2*a^2*cos_theta*sin_theta/(a^2-2*M*r+r^2) 0 0
             0 0 -2*a^2*cos_theta*sin_theta 0
             -4*(M*a^3*r+M*a*r^3)*cos_theta*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 2*((a^6-2*M*a^4*r+a^4*r^2)*cos_theta^5+2*(a^4*r^2-2*M*a^2*r^3+a^2*r^4)*cos_theta^3+(2*M*a^4*r+4*M*a^2*r^3+a^2*r^4+r^6)*cos_theta)*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
         ]
-        comp4 = @SMatrix [
+        comp4 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
             0 0 0 0
@@ -400,7 +400,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        @SMatrix [
+        ComputedGeodesicEquations.@SMatrix [
             2*M*r/(a^2*cos_theta^2+r^2)-1 0 0 -2*M*a*r*sin_theta^2/(a^2*cos_theta^2+r^2)
             0 (a^2*cos_theta^2+r^2)/(a^2-2*M*r+r^2) 0 0
             0 0 a^2*cos_theta^2+r^2 0
@@ -414,7 +414,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        @SMatrix [
+        ComputedGeodesicEquations.@SMatrix [
             -(2 * M * a^2 * r * sin_theta^2 + a^2 * r^2 + r^4 + (a^4 + a^2 * r^2) * cos_theta^2)/(a^2*r^2-2*M*r^3+r^4+(a^4-2*M*a^2*r+a^2*r^2)*cos_theta^2) 0 0 -2*M*a*r/(a^2*r^2-2*M*r^3+r^4+(a^4-2*M*a^2*r+a^2*r^2)*cos_theta^2)
             0 (a^2-2*M*r+r^2)/(a^2*cos_theta^2+r^2) 0 0
             0 0 1/(a^2*cos_theta^2+r^2) 0
