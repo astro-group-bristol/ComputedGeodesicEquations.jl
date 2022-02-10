@@ -137,7 +137,12 @@ def make_jacobian_julia_function(jac, *args):
     matrix_strings = [to_julia_matrix(str(v)) for (_, v) in jac.items()]
 
     components = "\n".join(
-        [f"comp{i+1} = ComputedGeodesicEquations.@SMatrix {matrix_strings[i]}" for i in range(4)]
+        [
+            (f"comp{i+1} = ComputedGeodesicEquations.@SMatrix {matrix_strings[i]}" 
+            if matrix_strings[i] != 0 else 
+            f"comp{i+1} = zeros(ComputedGeodesicEquations.SMatrix{{4,4,Float64}})")
+            for i in range(4)
+        ]
     )
 
     arguments = ", ".join((str(i) for i in ['u', *args]))
@@ -201,7 +206,7 @@ end
 end
 
 geodesic_eq(m::{name}{{T}}, u, v) where {{T}} = {name}Coords.geodesic_eq(u, v, {struct_arguments})
-geodesic_eq(m::{name}Jac{{T}}, u, v) where {{T}} = jac_geodesic_eq(u, v, m)
+geodesic_eq(m::{name}Jac{{T}}, u, v) where {{T}} = jac_geodesic_eq(m, u, v)
 
 constrain(m::{name}{{T}}, u, v; μ::T=0.0) where {{T}} = {name}Coords.constrain(μ, u, v, {struct_arguments})
 

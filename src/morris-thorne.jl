@@ -47,12 +47,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = ComputedGeodesicEquations.@SMatrix [
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-        ]
+        comp1 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
         comp2 = ComputedGeodesicEquations.@SMatrix [
             0 0 0 0
             0 0 0 0
@@ -65,12 +60,7 @@ end
             0 0 0 0
             0 0 0 (b^2+r^2)*cos_theta
         ]
-        comp4 = ComputedGeodesicEquations.@SMatrix [
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-        ]
+        comp4 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
         (comp1, comp2, comp3, comp4)
     end
 end
@@ -117,7 +107,7 @@ end
 end
 
 geodesic_eq(m::MorrisThorne{T}, u, v) where {T} = MorrisThorneCoords.geodesic_eq(u, v, m.b)
-geodesic_eq(m::MorrisThorneJac{T}, u, v) where {T} = jac_geodesic_eq(u, v, m)
+geodesic_eq(m::MorrisThorneJac{T}, u, v) where {T} = jac_geodesic_eq(m, u, v)
 
 constrain(m::MorrisThorne{T}, u, v; μ::T = 0.0) where {T} =
     MorrisThorneCoords.constrain(μ, u, v, m.b)

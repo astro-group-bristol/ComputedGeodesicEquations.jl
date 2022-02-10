@@ -367,12 +367,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = ComputedGeodesicEquations.@SMatrix [
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-        ]
+        comp1 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
         comp2 = ComputedGeodesicEquations.@SMatrix [
             2*(M*a^2*cos_theta^2-M*r^2)/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 -2*(M*a^3*cos_theta^2-M*a*r^2)*sin_theta^2/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
             0 2*(a^2*r-M*r^2+(M*a^2-a^2*r)*cos_theta^2)/(a^4-4*M*a^2*r-4*M*r^3+r^4+2*(2*M^2+a^2)*r^2) 0 0
@@ -385,12 +380,7 @@ end
             0 0 -2*a^2*cos_theta*sin_theta 0
             -4*(M*a^3*r+M*a*r^3)*cos_theta*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 2*((a^6-2*M*a^4*r+a^4*r^2)*cos_theta^5+2*(a^4*r^2-2*M*a^2*r^3+a^2*r^4)*cos_theta^3+(2*M*a^4*r+4*M*a^2*r^3+a^2*r^4+r^6)*cos_theta)*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
         ]
-        comp4 = ComputedGeodesicEquations.@SMatrix [
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-        ]
+        comp4 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
         (comp1, comp2, comp3, comp4)
     end
 end
@@ -440,7 +430,7 @@ end
 
 geodesic_eq(m::BoyerLindquist{T}, u, v) where {T} =
     BoyerLindquistCoords.geodesic_eq(u, v, m.M, m.a)
-geodesic_eq(m::BoyerLindquistJac{T}, u, v) where {T} = jac_geodesic_eq(u, v, m)
+geodesic_eq(m::BoyerLindquistJac{T}, u, v) where {T} = jac_geodesic_eq(m, u, v)
 
 constrain(m::BoyerLindquist{T}, u, v; μ::T = 0.0) where {T} =
     BoyerLindquistCoords.constrain(μ, u, v, m.M, m.a)

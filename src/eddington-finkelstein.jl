@@ -54,12 +54,7 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = ComputedGeodesicEquations.@SMatrix [
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-        ]
+        comp1 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
         comp2 = ComputedGeodesicEquations.@SMatrix [
             -2*M/r^2 -2*M/r^2 0 0
             -2*M/r^2 -2*M/r^2 0 0
@@ -72,12 +67,7 @@ end
             0 0 0 0
             0 0 0 2*r^2*cos_theta*sin_theta
         ]
-        comp4 = ComputedGeodesicEquations.@SMatrix [
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-            0 0 0 0
-        ]
+        comp4 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
         (comp1, comp2, comp3, comp4)
     end
 end
@@ -125,7 +115,7 @@ end
 
 geodesic_eq(m::EddingtonFinkelstein{T}, u, v) where {T} =
     EddingtonFinkelsteinCoords.geodesic_eq(u, v, m.M)
-geodesic_eq(m::EddingtonFinkelsteinJac{T}, u, v) where {T} = jac_geodesic_eq(u, v, m)
+geodesic_eq(m::EddingtonFinkelsteinJac{T}, u, v) where {T} = jac_geodesic_eq(m, u, v)
 
 constrain(m::EddingtonFinkelstein{T}, u, v; μ::T = 0.0) where {T} =
     EddingtonFinkelsteinCoords.constrain(μ, u, v, m.M)
