@@ -97,9 +97,9 @@ def generate_johannsen_psaltis():
     R = 2*M
     epsilon = var("epsilon")
     
-    h = epsilon * M^2 * r / Sigma^2
     Sigma = r**2 + a**2 * cos(theta)**2
     Delta = r**2 - 2*M*r + a**2
+    h = epsilon * M^2 * r / Sigma^2
 
     g = KM.lorentzian_metric('g')
 
