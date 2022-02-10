@@ -99,18 +99,18 @@ def generate_johannsen_psaltis():
     
     Sigma = r**2 + a**2 * cos(theta)**2
     Delta = r**2 - 2*M*r + a**2
-    h = epsilon * M^2 * r / Sigma^2
+    h = epsilon * M**2 * r / Sigma**2
 
     g = KM.lorentzian_metric('g')
 
     g[0,0] = -(1+h) * (1 - (R*r)/Sigma)
-    g[1,1] = Sigma * (1 + h) / (Delta + a^2 * h * sin(theta)^2)
+    g[1,1] = Sigma * (1 + h) / (Delta + a**2 * h * sin(theta)**2)
     g[2,2] = Sigma
-    g[3,3] = sin(theta)^2 * (
-        r^2 + a^2 + (2 * M * r * a^2 * sin(theta)^2) / Sigma
-    ) + (h * (Sigma + 2 * M * r) * a^2 * sin(theta)^4 )/ Sigma
+    g[3,3] = sin(theta)**2 * (
+        r**2 + a**2 + (2 * M * r * a**2 * sin(theta)**2) / Sigma
+    ) + (h * (Sigma + 2 * M * r) * a**2 * sin(theta)**4 )/ Sigma
 
-    g[0,3] = - (1+h) * (R * r * a * sin(theta)^2) / (Sigma)
+    g[0,3] = - (1+h) * (R * r * a * sin(theta)**2) / (Sigma)
     
     module = make_julia_module_from_metric_spherical(name, (t, r, theta, phi), g, M=1.0, a=0.0, epsilon=0.0)
 
@@ -124,7 +124,7 @@ inner_radius(m::{name}Jac{{T}}) where {{T}} = m.M + √(m.M^2 - m.a^2)
 
 
 def generate_all():
-    generate_morris_thorne()
-    generate_boyer_lindquist()
-    generate_eddington_finkelstein()
+    #generate_morris_thorne()
+    #generate_boyer_lindquist()
+    #generate_eddington_finkelstein()
     generate_johannsen_psaltis()
