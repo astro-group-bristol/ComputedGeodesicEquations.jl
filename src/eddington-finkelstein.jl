@@ -3,6 +3,7 @@
 Automatically generated from SageMath calculations
 
 Fergus Baker - 9th Nov 2021
+             - 10th Feb 2022: updated to include Jacobian method
 
 """
 module EddingtonFinkelsteinCoords
@@ -11,8 +12,8 @@ using ..ComputedGeodesicEquations
 
 @inline function geodesic_eq(u, v, M)
     ComputedGeodesicEquations.@let_unpack u v begin
-        cos_theta = cos(θ)
-        sin_theta = sin(θ)
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
 
         out1 =
             2 * (
@@ -36,8 +37,8 @@ end
 
 @inline function constrain(μ, u, v, M)
     ComputedGeodesicEquations.@let_unpack u v begin
-        cos_theta = cos(θ)
-        sin_theta = sin(θ)
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
 
         -(
             2 * M * v_r - sqrt(
@@ -48,6 +49,68 @@ end
     end
 end
 
+@inline function jacobian(u, M)
+    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+
+        comp1 = @SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+        ]
+        comp2 = @SMatrix [
+            -2*M/r^2 -2*M/r^2 0 0
+            -2*M/r^2 -2*M/r^2 0 0
+            0 0 2*r 0
+            0 0 0 2*r*sin_theta^2
+        ]
+        comp3 = @SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 2*r^2*cos_theta*sin_theta
+        ]
+        comp4 = @SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+        ]
+        (comp1, comp2, comp3, comp4)
+    end
+end
+
+@inline function metric(u, M)
+    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+
+        @SMatrix [
+            2*M/r-1 2*M/r 0 0
+            2*M/r 2*M/r+1 0 0
+            0 0 r^2 0
+            0 0 0 r^2*sin_theta^2
+        ]
+    end
+end
+
+@inline function inverse_metric(u, M)
+    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+        cos_theta = cos(theta)
+        sin_theta = sin(theta)
+
+        @SMatrix [
+            -(2 * M + r)/r 2*M/r 0 0
+            2*M/r -(2 * M - r)/r 0 0
+            0 0 r^(-2) 0
+            0 0 0 1/(r^2*sin_theta^2)
+        ]
+    end
+end
+
+
 end # module
 
 @with_kw struct EddingtonFinkelstein{T} <: AbstractMetricParams{T}
@@ -55,12 +118,33 @@ end # module
     M = 1.0
 end
 
-geodesic_eq(m::EddingtonFinkelstein, u, v) =
+@with_kw struct EddingtonFinkelsteinJac{T} <: AbstractMetricParams{T}
+    @deftype T
+    M = 1.0
+end
+
+geodesic_eq(m::EddingtonFinkelstein{T}, u, v) where {T} =
     EddingtonFinkelsteinCoords.geodesic_eq(u, v, m.M)
+geodesic_eq(m::EddingtonFinkelsteinJac{T}, u, v) where {T} = jac_geodesic_eq(u, v, m)
+
 constrain(m::EddingtonFinkelstein{T}, u, v; μ::T = 0.0) where {T} =
     EddingtonFinkelsteinCoords.constrain(μ, u, v, m.M)
 
-export EddingtonFinkelsteinCoords, EddingtonFinkelstein
+# specialisations
+metric(m::EddingtonFinkelstein{T}, u) where {T} = EddingtonFinkelsteinCoords.metric(u, m.M)
+inverse_metric(m::EddingtonFinkelstein{T}, u) where {T} =
+    EddingtonFinkelsteinCoords.inverse_metric(u, m.M)
+jacobian(m::EddingtonFinkelstein{T}, u) where {T} =
+    EddingtonFinkelsteinCoords.jacobian(u, m.M)
+metric(m::EddingtonFinkelsteinJac{T}, u) where {T} =
+    EddingtonFinkelsteinCoords.metric(u, m.M)
+inverse_metric(m::EddingtonFinkelsteinJac{T}, u) where {T} =
+    EddingtonFinkelsteinCoords.inverse_metric(u, m.M)
+jacobian(m::EddingtonFinkelsteinJac{T}, u) where {T} =
+    EddingtonFinkelsteinCoords.jacobian(u, m.M)
+
+export EddingtonFinkelsteinCoords, EddingtonFinkelstein, EddingtonFinkelsteinJac
 
 # additional specializations
 inner_radius(m::EddingtonFinkelstein{T}) where {T} = 2 * m.M
+inner_radius(m::EddingtonFinkelsteinJac{T}) where {T} = 2 * m.M
