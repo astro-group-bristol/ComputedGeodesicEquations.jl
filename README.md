@@ -7,32 +7,16 @@ These include
 ## Kerr geometries
 
 - Boyer-Lindquist Coordinates
+- (planned) Kerr-Schild Cartesian Coordinates
+
+## Modified Kerr geometries
+
+- Johannsen-Psaltis Metric in Boyer-Lindquist Coordinates
 
 ## Schwarzschild geometries
 
 - Eddington-Finkelstein Coordinates
 
-## Usage
+## Other
 
-Each spacetime is an exported module, defining three functions:
-
-- acceleration components (out-of-place):
-```jl
-function geodesic_eq(u, v, args...)
-    # ...
-end
-```
-
-- acceleration components (in-place):
-```jl
-function geodesic_eq!(duv, u, v, args...)
-    # ...
-end
-```
-
-- time constraint equation (returns time component of a light-like vector)
-```jl
-function null_constrain(u, v, args...)
-    # ...
-end
-```
+- Morris-Thorne Wormhole
