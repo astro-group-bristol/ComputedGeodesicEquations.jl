@@ -1,7 +1,7 @@
 name = "ComputedGeodesicEquations"
 uuid = "42910a5e-bdf1-4870-a538-dfa35571a56d"
 authors = ["fjebaker <fergusbkr@gmail.com>"]
-version = "0.3.3"
+version = "0.3.4"
 
 [deps]
 GeodesicBase = "1f539516-e6d2-4f24-ab09-50f3ac3c4a5a"
