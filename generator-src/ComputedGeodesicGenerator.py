@@ -1,5 +1,3 @@
-from ast import arg
-import struct
 from sage.all import *
 import itertools
 
@@ -13,7 +11,7 @@ def __generate_geodesic_equations(g, vel):
     for (i, j) in indexprod(2):
         constrain_eq += g[i,j] * vel[i] * vel[j]
 
-    sols = (constrain_eq.expr()==mu**2).solve(vel[0])
+    sols = (constrain_eq.expr()==-mu**2).solve(vel[0])
 
     cs = g.christoffel_symbols()
 
@@ -181,7 +179,7 @@ Automatically generated from SageMath calculations
 
 Fergus Baker - 9th Nov 2021
              - 10th Feb 2022: updated to include Jacobian method
-
+             - 1st Apr 2022: fix sign error in mu
 \"\"\"
 module {name}Coords
 
