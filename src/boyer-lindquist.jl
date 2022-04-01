@@ -4,7 +4,7 @@ Automatically generated from SageMath calculations
 
 Fergus Baker - 9th Nov 2021
              - 10th Feb 2022: updated to include Jacobian method
-
+             - 1st Apr 2022: fix sign error in mu
 """
 module BoyerLindquistCoords
 
@@ -268,9 +268,10 @@ end
         (
             2 * (M * a^3 * r - 2 * M^2 * a * r^2 + M * a * r^3) * v_phi * sin_theta^2 -
             sqrt(
-                2 * M * a^4 * μ^2 * r^3 + 6 * M * μ^2 * r^7 - μ^2 * r^8 -
-                2 * (6 * M^2 + a^2) * μ^2 * r^6 + 8 * (M^3 + M * a^2) * μ^2 * r^5 -
-                (8 * M^2 * a^2 + a^4) * μ^2 * r^4 -
+                -2 * M * a^4 * μ^2 * r^3 - 6 * M * μ^2 * r^7 +
+                μ^2 * r^8 +
+                2 * (6 * M^2 + a^2) * μ^2 * r^6 - 8 * (M^3 + M * a^2) * μ^2 * r^5 +
+                (8 * M^2 * a^2 + a^4) * μ^2 * r^4 +
                 (
                     a^8 * μ^2 - 4 * M * a^6 * μ^2 * r - 4 * M * a^4 * μ^2 * r^3 +
                     a^4 * μ^2 * r^4 +
@@ -345,7 +346,7 @@ end
                         4 * (4 * M^3 * a^2 + 5 * M * a^4) * r^5 -
                         (16 * M^2 * a^4 + 3 * a^6) * r^4
                     ) * cos_theta^2
-                ) * v_theta^2 +
+                ) * v_theta^2 -
                 2 *
                 (
                     M * a^6 * μ^2 * r + 5 * M * a^2 * μ^2 * r^5 - a^2 * μ^2 * r^6 -
@@ -367,7 +368,12 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
+        comp1 = ComputedGeodesicEquations.@SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+        ]
         comp2 = ComputedGeodesicEquations.@SMatrix [
             2*(M*a^2*cos_theta^2-M*r^2)/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 -2*(M*a^3*cos_theta^2-M*a*r^2)*sin_theta^2/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
             0 2*(a^2*r-M*r^2+(M*a^2-a^2*r)*cos_theta^2)/(a^4-4*M*a^2*r-4*M*r^3+r^4+2*(2*M^2+a^2)*r^2) 0 0
@@ -380,7 +386,12 @@ end
             0 0 -2*a^2*cos_theta*sin_theta 0
             -4*(M*a^3*r+M*a*r^3)*cos_theta*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4) 0 0 2*((a^6-2*M*a^4*r+a^4*r^2)*cos_theta^5+2*(a^4*r^2-2*M*a^2*r^3+a^2*r^4)*cos_theta^3+(2*M*a^4*r+4*M*a^2*r^3+a^2*r^4+r^6)*cos_theta)*sin_theta/(a^4*cos_theta^4+2*a^2*r^2*cos_theta^2+r^4)
         ]
-        comp4 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
+        comp4 = ComputedGeodesicEquations.@SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+        ]
         (comp1, comp2, comp3, comp4)
     end
 end
