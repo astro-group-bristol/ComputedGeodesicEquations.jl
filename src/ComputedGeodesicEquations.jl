@@ -3,7 +3,8 @@ module ComputedGeodesicEquations
 using Parameters
 using Tullio
 import StaticArrays: @SMatrix, SMatrix, MArray
-import GeodesicBase: AbstractMetricParams, geodesic_eq, constrain, on_chart, inner_radius, metric
+import GeodesicBase:
+    AbstractMetricParams, geodesic_eq, constrain, on_chart, inner_radius, metric
 
 """
     let_unpack(u, v, expr)

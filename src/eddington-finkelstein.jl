@@ -4,7 +4,7 @@ Automatically generated from SageMath calculations
 
 Fergus Baker - 9th Nov 2021
              - 10th Feb 2022: updated to include Jacobian method
-
+             - 1st Apr 2022: fix sign error in mu
 """
 module EddingtonFinkelsteinCoords
 
@@ -42,7 +42,8 @@ end
 
         -(
             2 * M * v_r - sqrt(
-                -(2 * M * r^3 - r^4) * v_phi^2 * sin_theta^2 + 2 * M * μ^2 * r - μ^2 * r^2 +
+                -(2 * M * r^3 - r^4) * v_phi^2 * sin_theta^2 - 2 * M * μ^2 * r +
+                μ^2 * r^2 +
                 r^2 * v_r^2 - (2 * M * r^3 - r^4) * v_theta^2,
             )
         ) / (2 * M - r)
@@ -54,7 +55,12 @@ end
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
-        comp1 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
+        comp1 = ComputedGeodesicEquations.@SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+        ]
         comp2 = ComputedGeodesicEquations.@SMatrix [
             -2*M/r^2 -2*M/r^2 0 0
             -2*M/r^2 -2*M/r^2 0 0
@@ -67,7 +73,12 @@ end
             0 0 0 0
             0 0 0 2*r^2*cos_theta*sin_theta
         ]
-        comp4 = zeros(ComputedGeodesicEquations.SMatrix{4,4,Float64})
+        comp4 = ComputedGeodesicEquations.@SMatrix [
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+        ]
         (comp1, comp2, comp3, comp4)
     end
 end
@@ -87,7 +98,7 @@ end
 end
 
 @inline function inverse_metric(u, M)
-    let t = u[1], r = u[2], theta = u[3], phi = u[4]
+    @fastmath let t = u[1], r = u[2], theta = u[3], phi = u[4]
         cos_theta = cos(theta)
         sin_theta = sin(theta)
 
